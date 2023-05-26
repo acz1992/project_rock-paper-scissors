@@ -56,7 +56,7 @@ function playRound(playerSelection, computerSelection) {
 }
 
 function game() {
-	let playerScore = 0;
+	/* 	let playerScore = 0;
 	let computerScore = 0;
 	for (let count = 0; count < 5; count++) {
 		let playerSelection = getPlayerSelection();
@@ -70,7 +70,7 @@ function game() {
 		}
 		console.log(`Player Score: ${playerScore}`);
 		console.log(`Computer Score: ${computerScore}`);
-	}
+	} */
 
 	if (playerScore > computerScore) {
 		console.log(

@@ -1,21 +1,27 @@
-function getPlayerSelection() {
-	let selection = prompt(
-		"Enter your choice of weapon",
-		"Rock, Paper or Scissors"
-	);
-	selection =
-		selection.substring(0, 1).toUpperCase() +
-		selection.slice(1).toLowerCase();
-	if (selection === "Rock" || "Paper" || "Scissors") {
-		return selection;
-	} else {
-		console.log(
-			"Invalid input, please select from either Rock, Paper or Scissors" &&
-				prompt("Enter your choice of weapon", "Rock, Paper or Scissors")
-		);
-	}
-}
+const playerScore = document.querySelector("#playerScore");
+const computerScore = document.querySelector("#computerScore");
+const overallScore = document.querySelector("#overallScore");
 
+// grab the HTML buttons
+const rockButton = document.querySelector("#rock");
+const paperButton = document.querySelector("#paper");
+const scissorsButton = document.querySelector("#scissors");
+
+// create Event Listeners that define both player and computer selections, as well as plays both rounds
+
+const computerSelection = getComputerChoice();
+
+rockButton.addEventListener("click", () => {
+	playRound("Rock", computerSelection);
+});
+paperButton.addEventListener("click", () =>
+	playRound("Paper", computerSelection)
+);
+scissorsButton.addEventListener("click", () => {
+	playRound("Scissors", computerSelection);
+});
+
+// Create randomized computer selection
 function getComputerChoice() {
 	let compNum = Math.floor(Math.random() * (3 - 1 + 1) + 1);
 	if (compNum === 1) {
@@ -55,8 +61,8 @@ function playRound(playerSelection, computerSelection) {
 	}
 }
 
-function game() {
-	/* 	let playerScore = 0;
+/* function game() {
+	let playerScore = 0;
 	let computerScore = 0;
 	for (let count = 0; count < 5; count++) {
 		let playerSelection = getPlayerSelection();
@@ -70,7 +76,7 @@ function game() {
 		}
 		console.log(`Player Score: ${playerScore}`);
 		console.log(`Computer Score: ${computerScore}`);
-	} */
+	}
 
 	if (playerScore > computerScore) {
 		console.log(
@@ -87,4 +93,21 @@ function game() {
 	}
 }
 
-game();
+game(); */
+
+// Unused
+
+/* const rock = document.createElement("button");
+const body = document.getElementsByTagName("body")[0];
+
+body.appendChild(rock);
+rock.setAttribute("id", "rock");
+
+const paper = document.createElement("button");
+rock.setAttribute("id", "paper");
+
+const scissors = document.createElement("button");
+rock.setAttribute("id", "scissors"); */
+
+/* const buttons = document.querySelectorAll("button");
+ */

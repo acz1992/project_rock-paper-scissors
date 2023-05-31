@@ -4,12 +4,15 @@ const computerScoreText = document.querySelector("#computerScoreText");
 const overallScoreText = document.querySelector("#overallScoreText");
 
 // grab the HTML buttons
-const choiceButtons = document.querySelectorAll("button");
+const choiceButtons = document.querySelectorAll("button.choice");
+
+const resetButton = document.querySelector("button#reset");
 
 // initialise
 let playerSelection;
 let computerSelection;
-let result;
+let playerScore = 0;
+let computerScore = 0;
 
 // create Event Listeners that define both player and computer selections, as well as plays both rounds
 choiceButtons.forEach((button) =>
@@ -22,8 +25,11 @@ choiceButtons.forEach((button) =>
 			playerSelection,
 			computerSelection
 		);
+		updateScore(overallScoreText.textContent);
 	})
 );
+
+resetButton.addEventListener("click", resetGame);
 
 // Create randomized computer selection
 function getComputerChoice() {
@@ -65,9 +71,33 @@ function playRound(playerSelection, computerSelection) {
 	}
 }
 
+function updateScore(result) {
+	if (result.includes("win")) {
+		playerScore++;
+		console.log(`Player Score: ${playerScore}`);
+		console.log(`Computer Score: ${computerScore}`);
+	} else if (result.includes("lose")) {
+		computerScore++;
+		console.log(`Player Score: ${playerScore}`);
+		console.log(`Computer Score:${computerScore}`);
+	} else if (result.includes("draw")) {
+		console.log(`Player Score: ${playerScore}`);
+		console.log(`Computer Score: ${computerScore}`);
+	}
+
+	if (playerScore === 5) {
+		console.log("Congrats, you win!");
+	} else if (computerScore === 5) {
+		console.log("Aww shucks, you lose!");
+	}
+}
+
+function resetGame() {
+	playerScore = 0;
+	computerScore = 0;
+}
+
 /* function game() {
-	let playerScore = 0;
-	let computerScore = 0;
 	for (let count = 0; count < 5; count++) {
 		let playerSelection = getPlayerSelection();
 		let computerSelection = getComputerChoice();
@@ -97,8 +127,8 @@ function playRound(playerSelection, computerSelection) {
 	}
 }
 
-game(); */
-
+game();
+ */
 // Unused
 
 /* const rock = document.createElement("button");

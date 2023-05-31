@@ -1,25 +1,29 @@
+//Text
 const playerScore = document.querySelector("#playerScore");
 const computerScore = document.querySelector("#computerScore");
 const overallScore = document.querySelector("#overallScore");
 
 // grab the HTML buttons
-const rockButton = document.querySelector("#rock");
-const paperButton = document.querySelector("#paper");
-const scissorsButton = document.querySelector("#scissors");
+const choiceButtons = document.querySelectorAll("button");
+
+// initialise
+let playerSelection;
+let computerSelection;
+let result;
 
 // create Event Listeners that define both player and computer selections, as well as plays both rounds
-
-const computerSelection = getComputerChoice();
-
-rockButton.addEventListener("click", () => {
-	playRound("Rock", computerSelection);
-});
-paperButton.addEventListener("click", () =>
-	playRound("Paper", computerSelection)
+choiceButtons.forEach((button) =>
+	button.addEventListener("click", () => {
+		playerSelection = button.textContent;
+		computerSelection = getComputerChoice();
+		playerScore.textContent = `Player: ${playerSelection}`;
+		computerScore.textContent = `Computer: ${computerSelection}`;
+		overallScore.textContent = playRound(
+			playerSelection,
+			computerSelection
+		);
+	})
 );
-scissorsButton.addEventListener("click", () => {
-	playRound("Scissors", computerSelection);
-});
 
 // Create randomized computer selection
 function getComputerChoice() {

@@ -1,7 +1,7 @@
 //Text
-const playerScore = document.querySelector("#playerScore");
-const computerScore = document.querySelector("#computerScore");
-const overallScore = document.querySelector("#overallScore");
+const playerScoreText = document.querySelector("#playerScoreText");
+const computerScoreText = document.querySelector("#computerScoreText");
+const overallScoreText = document.querySelector("#overallScoreText");
 
 // grab the HTML buttons
 const choiceButtons = document.querySelectorAll("button");
@@ -16,9 +16,9 @@ choiceButtons.forEach((button) =>
 	button.addEventListener("click", () => {
 		playerSelection = button.textContent;
 		computerSelection = getComputerChoice();
-		playerScore.textContent = `Player: ${playerSelection}`;
-		computerScore.textContent = `Computer: ${computerSelection}`;
-		overallScore.textContent = playRound(
+		playerScoreText.textContent = `Player: ${playerSelection}`;
+		computerScoreText.textContent = `Computer: ${computerSelection}`;
+		overallScoreText.textContent = playRound(
 			playerSelection,
 			computerSelection
 		);

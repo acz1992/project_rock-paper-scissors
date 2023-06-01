@@ -1,7 +1,11 @@
 //Text
-const playerScoreText = document.querySelector("#playerScoreText");
-const computerScoreText = document.querySelector("#computerScoreText");
+const playerChoice = document.querySelector("#playerChoice");
+const computerChoice = document.querySelector("#computerChoice");
 const overallScoreText = document.querySelector("#overallScoreText");
+const updatedPlayerText = document.querySelector("#updatedPlayerText");
+const updatedComputerText = document.querySelector("#updatedComputerText");
+const scoreContainer = document.querySelector(".scoreContainer");
+const overallWinner = document.querySelector("#overallWinner");
 
 // grab the HTML buttons
 const choiceButtons = document.querySelectorAll("button.choice");
@@ -19,8 +23,8 @@ choiceButtons.forEach((button) =>
 	button.addEventListener("click", () => {
 		playerSelection = button.textContent;
 		computerSelection = getComputerChoice();
-		playerScoreText.textContent = `Player: ${playerSelection}`;
-		computerScoreText.textContent = `Computer: ${computerSelection}`;
+		playerChoice.textContent = `Player chooses ${playerSelection}`;
+		computerChoice.textContent = `Computer chooses ${computerSelection}`;
 		overallScoreText.textContent = playRound(
 			playerSelection,
 			computerSelection
@@ -74,27 +78,40 @@ function playRound(playerSelection, computerSelection) {
 function updateScore(result) {
 	if (result.includes("win")) {
 		playerScore++;
-		console.log(`Player Score: ${playerScore}`);
-		console.log(`Computer Score: ${computerScore}`);
+		updatedPlayerText.textContent = `Player Score: ${playerScore}`;
+		updatedComputerText.textContent = `Computer Score: ${computerScore}`;
 	} else if (result.includes("lose")) {
 		computerScore++;
-		console.log(`Player Score: ${playerScore}`);
-		console.log(`Computer Score:${computerScore}`);
+		updatedPlayerText.textContent = `Player Score: ${playerScore}`;
+		updatedComputerText.textContent = `Computer Score: ${computerScore}`;
 	} else if (result.includes("draw")) {
-		console.log(`Player Score: ${playerScore}`);
-		console.log(`Computer Score: ${computerScore}`);
+		updatedPlayerText.textContent = `Player Score: ${playerScore}`;
+		updatedComputerText.textContent = `Computer Score: ${computerScore}`;
 	}
 
 	if (playerScore === 5) {
-		console.log("Congrats, you win!");
+		/* 		playerScore.textContent = `Player Score: ${playerScore}`;
+		computerScore.textContent = `Computer Score: ${computerScore}`; */
+		overallWinner.textContent = "Congrats, you win!";
+		updatedPlayerText.remove();
+		updatedComputerText.remove();
 	} else if (computerScore === 5) {
-		console.log("Aww shucks, you lose!");
+		overallWinner.textContent = "Aww shucks, you lose!";
+		updatedPlayerText.remove();
+		updatedComputerText.remove();
 	}
 }
 
 function resetGame() {
 	playerScore = 0;
 	computerScore = 0;
+	scoreContainer.appendChild(updatedPlayerText);
+	scoreContainer.appendChild(updatedComputerText);
+	overallScoreText.remove();
+	overallWinner.remove();
+
+	updatedPlayerText.textContent = "Player Score: 0";
+	updatedComputerText.textContent = "Computer Score: 0";
 }
 
 /* function game() {

@@ -1,35 +1,63 @@
-//Text
-const playerChoice = document.querySelector("#playerChoice");
-const computerChoice = document.querySelector("#computerChoice");
-const overallScoreText = document.querySelector("#overallScoreText");
-const updatedPlayerText = document.querySelector("#updatedPlayerText");
-const updatedComputerText = document.querySelector("#updatedComputerText");
+// grab containers
+const individualScoreContainer = document.querySelector(
+	"#individualScoreContainer"
+);
 const scoreContainer = document.querySelector(".scoreContainer");
-const overallWinner = document.querySelector("#overallWinner");
 
 // grab the HTML buttons
 const choiceButtons = document.querySelectorAll("button.choice");
 
-const resetButton = document.querySelector("button#reset");
+// create elements
+const playerChoice = document.createElement("h1");
+playerChoice.setAttribute("id", "playerChoice");
+playerChoice.classList.toggle("individualScoreText");
+
+const computerChoice = document.createElement("h1");
+computerChoice.setAttribute("id", "computerChoice");
+playerChoice.classList.add("individualScoreText");
+
+const roundWinnerText = document.createElement("h1");
+roundWinnerText.setAttribute("id", "roundWinnerText");
+
+const updatedPlayerText = document.createElement("h1");
+updatedPlayerText.setAttribute("id", "updatedPlayerText");
+
+const updatedComputerText = document.createElement("h1");
+updatedComputerText.setAttribute("id", "updatedComputerText");
+
+const overallWinner = document.createElement("h1");
+overallWinner.setAttribute("id", "overallWinner");
+
+const resetButton = document.createElement("button");
+resetButton.setAttribute("id", "reset");
 
 // initialise
 let playerSelection;
 let computerSelection;
 let playerScore = 0;
 let computerScore = 0;
+let gameOver = false;
 
 // create Event Listeners that define both player and computer selections, as well as plays both rounds
 choiceButtons.forEach((button) =>
 	button.addEventListener("click", () => {
-		playerSelection = button.textContent;
-		computerSelection = getComputerChoice();
-		playerChoice.textContent = `Player chooses ${playerSelection}`;
-		computerChoice.textContent = `Computer chooses ${computerSelection}`;
-		overallScoreText.textContent = playRound(
-			playerSelection,
-			computerSelection
-		);
-		updateScore(overallScoreText.textContent);
+		if (!gameOver) {
+			playerSelection = button.textContent;
+			computerSelection = getComputerChoice();
+
+			individualScoreContainer.appendChild(playerChoice);
+			playerChoice.textContent = `Player chooses ${playerSelection}`;
+
+			individualScoreContainer.appendChild(computerChoice);
+			computerChoice.textContent = `Computer chooses ${computerSelection}`;
+
+			individualScoreContainer.after(roundWinnerText);
+			roundWinnerText.textContent = playRound(
+				playerSelection,
+				computerSelection
+			);
+			updateScore(roundWinnerText.textContent);
+		}
 	})
 );
 
@@ -90,13 +118,13 @@ function updateScore(result) {
 	}
 
 	if (playerScore === 5) {
-		/* 		playerScore.textContent = `Player Score: ${playerScore}`;
-		computerScore.textContent = `Computer Score: ${computerScore}`; */
 		overallWinner.textContent = "Congrats, you win!";
+		gameOver = true;
 		updatedPlayerText.remove();
 		updatedComputerText.remove();
 	} else if (computerScore === 5) {
 		overallWinner.textContent = "Aww shucks, you lose!";
+		gameOver = true;
 		updatedPlayerText.remove();
 		updatedComputerText.remove();
 	}
@@ -105,9 +133,10 @@ function updateScore(result) {
 function resetGame() {
 	playerScore = 0;
 	computerScore = 0;
+	gameOver = false;
 	scoreContainer.appendChild(updatedPlayerText);
 	scoreContainer.appendChild(updatedComputerText);
-	overallScoreText.remove();
+	roundWinnerText.remove();
 	overallWinner.remove();
 
 	updatedPlayerText.textContent = "Player Score: 0";

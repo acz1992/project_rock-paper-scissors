@@ -3,6 +3,7 @@ const individualScoreContainer = document.querySelector(
 	"#individualScoreContainer"
 );
 const scoreContainer = document.querySelector(".scoreContainer");
+const lineBreak = document.querySelector("#lineBreak");
 
 // grab the HTML buttons
 const choiceButtons = document.querySelectorAll("button.choice");
@@ -14,7 +15,7 @@ playerChoice.classList.toggle("individualScoreText");
 
 const computerChoice = document.createElement("h1");
 computerChoice.setAttribute("id", "computerChoice");
-playerChoice.classList.add("individualScoreText");
+computerChoice.classList.add("individualScoreText");
 
 const roundWinnerText = document.createElement("h1");
 roundWinnerText.setAttribute("id", "roundWinnerText");
@@ -30,6 +31,7 @@ overallWinner.setAttribute("id", "overallWinner");
 
 const resetButton = document.createElement("button");
 resetButton.setAttribute("id", "reset");
+resetButton.textContent = "Reset";
 
 // initialise
 let playerSelection;
@@ -51,11 +53,13 @@ choiceButtons.forEach((button) =>
 			individualScoreContainer.appendChild(computerChoice);
 			computerChoice.textContent = `Computer chooses ${computerSelection}`;
 
-			individualScoreContainer.after(roundWinnerText);
+			individualScoreContainer.appendChild(roundWinnerText);
 			roundWinnerText.textContent = playRound(
 				playerSelection,
 				computerSelection
 			);
+			scoreContainer.appendChild(updatedPlayerText);
+			scoreContainer.appendChild(updatedComputerText);
 			updateScore(roundWinnerText.textContent);
 		}
 	})
@@ -118,15 +122,23 @@ function updateScore(result) {
 	}
 
 	if (playerScore === 5) {
+		gameOver = true;
+		lineBreak.after(overallWinner);
 		overallWinner.textContent = "Congrats, you win!";
-		gameOver = true;
+		overallWinner.after(resetButton);
 		updatedPlayerText.remove();
 		updatedComputerText.remove();
+		playerChoice.remove();
+		computerChoice.remove();
 	} else if (computerScore === 5) {
-		overallWinner.textContent = "Aww shucks, you lose!";
 		gameOver = true;
+		lineBreak.after(overallWinner);
+		overallWinner.textContent = "Aww shucks, you lose!";
+		overallWinner.after(resetButton);
 		updatedPlayerText.remove();
 		updatedComputerText.remove();
+		playerChoice.remove();
+		computerChoice.remove();
 	}
 }
 
@@ -134,13 +146,18 @@ function resetGame() {
 	playerScore = 0;
 	computerScore = 0;
 	gameOver = false;
-	scoreContainer.appendChild(updatedPlayerText);
-	scoreContainer.appendChild(updatedComputerText);
 	roundWinnerText.remove();
 	overallWinner.remove();
+	updatedPlayerText.remove();
+	updatedComputerText.remove();
+	scoreContainer.appendChild(updatedPlayerText);
+	scoreContainer.appendChild(updatedComputerText);
+	updatedPlayerText.remove();
+	updatedComputerText.remove();
+	resetButton.remove();
 
-	updatedPlayerText.textContent = "Player Score: 0";
-	updatedComputerText.textContent = "Computer Score: 0";
+	/* updatedPlayerText.textContent = "Player Score: 0";
+	updatedComputerText.textContent = "Computer Score: 0"; */
 }
 
 /* function game() {
